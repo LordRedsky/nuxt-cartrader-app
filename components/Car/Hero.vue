@@ -1,3 +1,5 @@
+
+
 <template>
   <!-- HOME HERO START -->
   <div
@@ -7,7 +9,7 @@
       <div class="text-center w-1/2">
         <h1 class="text-8xl font-serif mb-10 text-white">Find your drive</h1>
         <!-- HOME SEARCH BAR START -->
-        <CarSearchBar/>
+        <CarSearchBar />
         <!-- HOME SEARCH BAR END -->
       </div>
     </div>

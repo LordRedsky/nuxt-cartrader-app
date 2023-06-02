@@ -1,28 +1,38 @@
 <script setup>
 const route = useRoute();
+const { cars } = useCars();
+const { toTitleCase } = useUtilities();
+
 useHead({
   title: toTitleCase(route.params.name),
 });
 
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+const car = computed(() => {
+  return cars.find((c) => {
+    return c.id === parseInt(route.params.id);
+  });
+});
+
+if (!car.value) {
+  throw createError({
+    statusCode: 404,
+    message: `Car with ID of ${route.params.id} does not exist`,
   });
 }
+
+definePageMeta({
+  layout: "custom",
+});
 </script>
 
 <template>
   <div>
-    <!-- <NavBar /> -->
     <!-- CAR DETAIL START -->
-    <div
-      class="mx-auto mt-41 max-w-7xl space-y-4 px-4 xs:px-8 sm:px-10 lg:px-16 pb-16 w-3/5"
-    >
-      <CarDetailHero />
-      <CarDetailAttributes />
-      <CarDetailDescription />
-      <CarDetailContact />
-    </div>
-    <!-- CAR DETAIL END -->
+    <!-- {{ car }} -->
+    <CarDetailHero :car="car" />
+    <CarDetailAttributes :features="car.features" />
+    <CarDetailDescription :description="car.description" />
+    <CarDetailContact />
   </div>
+  <!-- CAR DETAIL END -->
 </template>
